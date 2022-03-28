@@ -4,28 +4,63 @@ using UnityEngine;
 
 public class TileGrid : MonoBehaviour
 {
-    [Range(0,100)]
-    [SerializeField] private int width, height;
-    [SerializeField] private Transform _tilePrefab;
+    [Header("Dimensions")]
+    [Range(0,30)] [SerializeField] private int _width;
+    [Range(0,30)] [SerializeField] private int _height;
+    private Transform[,] _gridArray;
+
+    [Header("Tile")]
+    //Based on 32 PPU, and 32 x 32 pixels
     [SerializeField] private float _tileScale;
+    [SerializeField] private Transform _tilePrefab;
+
     private void Awake()
     {
-        Vector2 tileSize = _tilePrefab.GetComponent<Tile>().Size;
-        for(int r = 0; r < height; r++)
+        CreateNewGridArray();
+    }
+
+    public void CreateNewGridArray()
+    {
+        if(_gridArray != null)
         {
-            for(int c = 0; c < width; c++)
+           for(int x = 0; x < _gridArray.GetLength(0); x++)
             {
-                GameObject tile = Instantiate(_tilePrefab.gameObject,
-                            new Vector3(c * _tileScale,
-                                        r * _tileScale,
-                                        0f),
-                            Quaternion.identity,
-                            transform);
-                tile.transform.localScale = new Vector3(_tileScale, _tileScale, 1f);
+                for (int y = 0; y < _gridArray.GetLength(1); y++)
+                {
+                    Destroy(_gridArray[x,y].gameObject);
+                }
+            }
+            transform.position = Vector3.zero;
+        }
+
+        _gridArray = new Transform[_width, _height];
+
+        for(int x = 0; x < _gridArray.GetLength(0); x++)
+        {
+            for (int y = 0; y < _gridArray.GetLength(1); y++)
+            {
+                _gridArray[x,y] = CreateTile(x,y);
             }
         }
-        transform.position = new Vector3(_tileScale * (-width/2f + 0.5f),
-                                        _tileScale * (-height/2f + 0.5f),
-                                        0f);
+
+        //Offset Grid Position
+        transform.position = new Vector3(-1*_width/2.0f + 0.5f, -1*_height/2.0f +0.5f);        
+    }
+
+    //Get the tile's world position based on it's index in the array
+    private Vector3 GetWorldPosition(int x, int y)
+    {
+        return new Vector3(x,y) * _tileScale;
+    }
+
+    //Instantiates a tile prefab in world space
+    private Transform CreateTile(int x, int y)
+    {
+        GameObject tile = Instantiate(_tilePrefab.gameObject,
+                                            GetWorldPosition(x,y),
+                                            Quaternion.identity,
+                                            transform);
+                tile.transform.localScale *= _tileScale;
+        return tile.transform;
     }
 }
