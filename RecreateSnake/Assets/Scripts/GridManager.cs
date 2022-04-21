@@ -8,6 +8,7 @@ public class GridManager
     [SerializeField] private GridValues[,] _gridArray;
     [SerializeField] private float _offSetWidth;
     [SerializeField] private float _offSetHeight;
+    private Color[] _colors = {Color.white, Color.green, Color.red};
     public enum GridValues
     {
         Empty = 0,
@@ -30,12 +31,8 @@ public class GridManager
             for(int y = 0; y < _gridArray.GetLength(1); y++)
             {
                 SetValue(x,y,0);
-                Debug.DrawLine(GetWorldPosition(x,y), GetWorldPosition(x, y+1), Color.white, 100f);
-                Debug.DrawLine(GetWorldPosition(x,y), GetWorldPosition(x+1, y), Color.white, 100f);
             }
         }
-        Debug.DrawLine(GetWorldPosition(0,height), GetWorldPosition(width,height), Color.white, 100f);
-        Debug.DrawLine(GetWorldPosition(width,0), GetWorldPosition(width,height), Color.white, 100f);
     }
 
     private Vector3 GetWorldPosition(int x, int y)
@@ -48,10 +45,10 @@ public class GridManager
         if(x >= 0 && y >= 0 && x < _width && y < _height && System.Enum.IsDefined(typeof(GridValues), value))
         {
             _gridArray[x,y] = (GridValues)value;
-            Debug.DrawLine(GetWorldPosition(x,y), GetWorldPosition(x, y+1), Color.red, 100f);
-            Debug.DrawLine(GetWorldPosition(x,y), GetWorldPosition(x+1, y), Color.red, 100f);
-            Debug.DrawLine(GetWorldPosition(x+1,y+1), GetWorldPosition(x, y+1), Color.red, 100f);
-            Debug.DrawLine(GetWorldPosition(x+1,y+1), GetWorldPosition(x+1, y), Color.red, 100f);
+            Debug.DrawLine(GetWorldPosition(x,y), GetWorldPosition(x, y+1), _colors[value], 100f);
+            Debug.DrawLine(GetWorldPosition(x,y), GetWorldPosition(x+1, y), _colors[value], 100f);
+            Debug.DrawLine(GetWorldPosition(x+1,y+1), GetWorldPosition(x, y+1), _colors[value], 100f);
+            Debug.DrawLine(GetWorldPosition(x+1,y+1), GetWorldPosition(x+1, y), _colors[value], 100f);
         }
     }
 

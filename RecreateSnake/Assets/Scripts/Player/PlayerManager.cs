@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private GameManager _gameManager;
+    public GameManager GameManager{ get{return _gameManager;}}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private Camera _cam;
+    public Camera Cam{ get{return _cam;}}
+    
+    
 }
