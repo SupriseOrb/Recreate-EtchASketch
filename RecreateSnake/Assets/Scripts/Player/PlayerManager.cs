@@ -18,8 +18,57 @@ public class PlayerManager : MonoBehaviour
     [Header("Movement Variables")]
     [SerializeField] private bool _isMoving;
     public bool IsMoving{ get{return _isMoving;} set{_isMoving = value;}}
-    [SerializeField] private Vector2Int _direction;
-    public Vector2Int Direction{ get{return _direction;} set{_direction = value;}}
     
-    
+    [SerializeField] private Vector2 _currentDirection = new Vector2(0f,0f);
+    [SerializeField] private Queue<Vector2> _queuedDirections = new Queue<Vector2>();
+
+    private bool IsInputOnCurrentDirectionAxis(Vector2 direction)
+    {
+        if((Mathf.Abs(direction.x) == 1f && Mathf.Abs(_currentDirection.x) ==1f) ||
+            (Mathf.Abs(direction.y) == 1f && Mathf.Abs(_currentDirection.y) ==1f))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public Vector2 GetDirection(bool dequeue = false)
+    {
+        if(_queuedDirections.Count > 0)
+        {
+            if(dequeue)
+            {
+                Vector2 direction = _queuedDirections.Dequeue();
+                if(!IsInputOnCurrentDirectionAxis(direction))
+                {
+                    _currentDirection = direction;
+                }
+            }
+            else
+            {
+                return _queuedDirections.Peek();
+            }
+        }
+
+        return _currentDirection;
+    }
+
+    public void AddDirection(Vector2 direction, bool clearQueue = false)
+    {
+        if(clearQueue)
+        {
+            _queuedDirections.Clear();
+        }
+
+        if(Mathf.Abs(direction.x) > 0.5f)
+        {
+            _queuedDirections.Enqueue(new Vector2(Mathf.Sign(direction.x) * 1f, 0f));
+        }
+        else if(Mathf.Abs(direction.y) > 0.5f)
+        {
+            _queuedDirections.Enqueue(new Vector2(0f, Mathf.Sign(direction.y) * 1f));
+        }
+    }
 }

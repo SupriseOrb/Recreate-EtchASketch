@@ -17,6 +17,9 @@ public class InputHandler : MonoBehaviour
 
     [Header("Movement Input")]
     [SerializeField] private string _playerMovementActionString = "Movement";
+    [SerializeField] [Range(0,1f)] private float _maxTimeBetweenInputs = 0.3f;
+    [SerializeField] [Range(0,1f)] private float _minTimeBetweenInputs = 0.1f;
+    private float _currentInputTime;
     private InputAction _movementAction;
 
     private void Awake()
@@ -24,6 +27,16 @@ public class InputHandler : MonoBehaviour
         _mouseMoveAction = _playerInput.actions[_mouseMoveActionString];
         _mouseClickAction = _playerInput.actions[_mouseClickActionString];
         _movementAction = _playerInput.actions[_playerMovementActionString];
+
+        _currentInputTime = 0f;
+    }
+
+    private void Update()
+    {
+        if(_currentInputTime < _maxTimeBetweenInputs)
+        {
+            _currentInputTime+= Time.deltaTime;
+        }
     }
 
     private void OnEnable()
@@ -67,8 +80,16 @@ public class InputHandler : MonoBehaviour
     private void OnMovement(InputAction.CallbackContext context)
     {
         Vector2 inputVector = context.ReadValue<Vector2>();
-        _playerManager.Direction = new Vector2Int(Mathf.RoundToInt(inputVector.x), Mathf.RoundToInt(inputVector.y));
-        
+        if(_currentInputTime <= _maxTimeBetweenInputs && _currentInputTime >= _minTimeBetweenInputs)
+        {
+            _playerManager.AddDirection(inputVector);
+            _currentInputTime = 0f;
+        }
+        else if(_currentInputTime >= _maxTimeBetweenInputs)
+        {
+            _playerManager.AddDirection(inputVector, true);
+            _currentInputTime = 0f;
+        }      
     }
 
     

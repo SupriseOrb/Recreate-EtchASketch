@@ -113,6 +113,7 @@ MonoBehaviour:
   _cam: {fileID: 0}
   _gridMovement: {fileID: 4453445172800433615}
   _isMoving: 0
+  _currentDirection: {x: 0, y: 0}
 --- !u!114 &9082217532731492248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,7 +131,8 @@ MonoBehaviour:
   _mouseMoveActionString: MousePos
   _mouseClickActionString: MouseLeftClick
   _playerMovementActionString: Movement
-  _inputVector: {x: 0, y: 0}
+  _maxTimeBetweenInputs: 0.3
+  _minTimeBetweenInputs: 0.1
 --- !u!114 &4453445172800433615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,6 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerManager: {fileID: 2197176696220704933}
+  _timeToMove: 0.2
 --- !u!1 &3388840996570287299
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public class GridMovement : MonoBehaviour
     {
         if(!_playerManager.IsMoving)
         {
-            StartCoroutine(Move(_playerManager.Direction));
+            StartCoroutine(Move(_playerManager.GetDirection(true)));
         }
         
     }
