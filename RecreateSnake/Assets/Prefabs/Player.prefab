@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 2197176696220704933}
   - component: {fileID: 9082217532731492248}
   - component: {fileID: 4453445172800433615}
+  - component: {fileID: 3962493995125507494}
+  - component: {fileID: 4900839899325799899}
   m_Layer: 3
   m_Name: Functionality
   m_TagString: Untagged
@@ -114,6 +116,7 @@ MonoBehaviour:
   _gridMovement: {fileID: 4453445172800433615}
   _isMoving: 0
   _currentDirection: {x: 0, y: 0}
+  _length: 1
 --- !u!114 &9082217532731492248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,6 +150,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerManager: {fileID: 2197176696220704933}
   _timeToMove: 0.2
+--- !u!50 &3962493995125507494
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2593695883676111938}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &4900839899325799899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2593695883676111938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86236bf77b1912542be3b15f28d2d74a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerManager: {fileID: 2197176696220704933}
+  _pickUpMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &3388840996570287299
 GameObject:
   m_ObjectHideFlags: 0

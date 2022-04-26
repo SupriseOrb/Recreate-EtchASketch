@@ -10,18 +10,25 @@ public class PlayerManager : MonoBehaviour
 
     [SerializeField] private Camera _cam;
     public Camera Cam{ get{return _cam;}}
-
-    [Header("On Prefab")]
-    [SerializeField] private GridMovement _gridMovement;
-    public GridMovement GridMovement{ get{return _gridMovement;}}
     
     [Header("Movement Variables")]
+    [SerializeField] private GridMovement _gridMovement;
+    public GridMovement GridMovement{ get{return _gridMovement;}}
     [SerializeField] private bool _isMoving;
     public bool IsMoving{ get{return _isMoving;} set{_isMoving = value;}}
-    
     [SerializeField] private Vector2 _currentDirection = new Vector2(0f,0f);
     [SerializeField] private Queue<Vector2> _queuedDirections = new Queue<Vector2>();
 
+    [Header("Visuals")]
+    [SerializeField] private int _length = 1;
+
+    public void IncreaseLength()
+    {
+        _length++;
+        Debug.Log("Update Visuals");
+        //TODO: Update the visuals of snake
+        _gameManager.UpdateGridSnakePosition();
+    }
     private bool IsInputOnCurrentDirectionAxis(Vector2 direction)
     {
         if((Mathf.Abs(direction.x) == 1f && Mathf.Abs(_currentDirection.x) ==1f) ||
