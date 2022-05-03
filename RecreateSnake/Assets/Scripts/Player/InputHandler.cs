@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+//Handles all the player's input
 public class InputHandler : MonoBehaviour
 {
     [SerializeField] private PlayerManager _playerManager;
@@ -39,6 +40,7 @@ public class InputHandler : MonoBehaviour
         }
     }
 
+    //Subscribe to the various input action events when the input handler is enabled
     private void OnEnable()
     {
         //_mouseMoveAction.started += OnMouseMove;
@@ -52,6 +54,7 @@ public class InputHandler : MonoBehaviour
         //_movementAction.canceled += OnMovement;
     }
 
+    //Unsubscribe from the various input action events when the input handler is disabled
     private void OnDisable()
     {
         //_mouseMoveAction.started -= OnMouseMove;
@@ -76,10 +79,9 @@ public class InputHandler : MonoBehaviour
         _playerManager.GameManager.SetValue(_mouseWorldPosition, (int)GridManager.GridValues.Snake);
     }
 
-
     private void OnMovement(InputAction.CallbackContext context)
     {
-        Vector2 inputVector = context.ReadValue<Vector2>();
+        Vector3 inputVector = context.ReadValue<Vector2>();
         if(_currentInputTime <= _maxTimeBetweenInputs && _currentInputTime >= _minTimeBetweenInputs)
         {
             _playerManager.AddDirection(inputVector);

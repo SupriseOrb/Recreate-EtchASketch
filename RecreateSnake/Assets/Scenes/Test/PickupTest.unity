@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!96 &72797744 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 6267542784697845832, guid: 233c9610d12eab34b84fe355e21bdf37, type: 3}
+  m_PrefabInstance: {fileID: 1763319683046017784}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &339897574 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7944458674359383994, guid: 579d79dea10e07e4eaf1a57dbd1ba1b3, type: 3}
@@ -230,6 +235,37 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!1 &961452620
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 961452621}
+  m_Layer: 0
+  m_Name: Blobs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &961452621
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961452620}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1159827090}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &965107943 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4687436189022357698, guid: 579d79dea10e07e4eaf1a57dbd1ba1b3, type: 3}
@@ -387,6 +423,11 @@ Transform:
   m_Father: {fileID: 465823368}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1159827090 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2106337632333986473, guid: 233c9610d12eab34b84fe355e21bdf37, type: 3}
+  m_PrefabInstance: {fileID: 1763319683046017784}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1327290096
 GameObject:
   m_ObjectHideFlags: 0
@@ -2641,12 +2682,32 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1336338877}
     - target: {fileID: 2197176696220704933, guid: 233c9610d12eab34b84fe355e21bdf37, type: 3}
+      propertyPath: _length
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2197176696220704933, guid: 233c9610d12eab34b84fe355e21bdf37, type: 3}
       propertyPath: _gameManager
       value: 
       objectReference: {fileID: 466210239}
+    - target: {fileID: 2197176696220704933, guid: 233c9610d12eab34b84fe355e21bdf37, type: 3}
+      propertyPath: _trailRenderer
+      value: 
+      objectReference: {fileID: 72797744}
     - target: {fileID: 3388840996570287299, guid: 233c9610d12eab34b84fe355e21bdf37, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4453445172800433615, guid: 233c9610d12eab34b84fe355e21bdf37, type: 3}
+      propertyPath: _snakeBlobParent
+      value: 
+      objectReference: {fileID: 961452621}
+    - target: {fileID: 4453445172800433615, guid: 233c9610d12eab34b84fe355e21bdf37, type: 3}
+      propertyPath: _snakeBlobPrefab
+      value: 
+      objectReference: {fileID: 3228176380212176258, guid: 7b0747820d696ad4e80f8225facf54cb, type: 3}
+    - target: {fileID: 6267542784697845832, guid: 233c9610d12eab34b84fe355e21bdf37, type: 3}
+      propertyPath: m_Time
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 233c9610d12eab34b84fe355e21bdf37, type: 3}

@@ -64,4 +64,6 @@ public class GridManager
         GetXY(worldPosition, out x, out y);
         SetValue(x, y, value);
     }
+
+    
 }

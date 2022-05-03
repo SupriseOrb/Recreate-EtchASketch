@@ -26,15 +26,23 @@ public class GameManager : MonoBehaviour
         _gameState.SetValue(worldPosition, value);
     }
 
-    public void UpdateGridSnakePosition()
+    public void UpdateGameState(Vector3 position, GridManager.GridValues value)
     {
-        Debug.Log("Update Grid Snake Position");
-        //TODO: Update grid using SetValue();
+        _gameState.SetValue(position, (int)value);
     }
 
     public void UpdateScore(int points)
     {
         score += points;
-        _scoreText.text = "Score: " + score.ToString();
+        if(_scoreText!= null)
+        {
+            _scoreText.text = "Score: " + score.ToString();
+        }
+        
+    }
+
+    public Vector3 NextAvailablePosition(Vector3 lastPosition, Vector3 secondToLastPosition)
+    {
+        return new Vector3();
     }
 }
