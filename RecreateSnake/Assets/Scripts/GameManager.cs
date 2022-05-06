@@ -73,7 +73,9 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Game Over: " + value);
             Time.timeScale = 0f;
-            //TODO: GameOver - Lose
+            //TODO: Check if lose or win
+            //Win: length = grid count
+            //Else lose
             return;
         }
         else if(_pickupDict.ContainsKey(value))
