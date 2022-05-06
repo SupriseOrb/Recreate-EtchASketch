@@ -44,8 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6547a5e961d943f4993e924013f666a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerManager: {fileID: 0}
   _width: 18
   _height: 10
   _cellSize: 1
   _scoreText: {fileID: 0}
   score: 0
+  _pickupValues:
+  - {fileID: 11400000, guid: cd817ef6a5559a048a58b3107ede039e, type: 2}

@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GridManager
@@ -5,17 +7,9 @@ public class GridManager
     [SerializeField] [Range(5,18)] private int _width;
     [SerializeField] [Range(5,10)] private int _height;
     [SerializeField] private float _cellSize;
-    [SerializeField] private GridValues[,] _gridArray;
+    [SerializeField] private string[,] _gridArray;
     [SerializeField] private float _offSetWidth;
     [SerializeField] private float _offSetHeight;
-    private Color[] _colors = {Color.white, Color.green, Color.red};
-    public enum GridValues
-    {
-        Empty = 0,
-        Snake = 1,
-        Pickup = 2
-    }
-
     public GridManager(int width, int height, float cellSize)
     {
         _width = width;
@@ -24,15 +18,17 @@ public class GridManager
         _offSetHeight = -1 * (_height/2f);
         _cellSize = cellSize;
 
-        _gridArray = new GridValues[width, height];
+        _gridArray = new string[width, height];
 
         for(int x = 0; x < _gridArray.GetLength(0); x++)
         {
             for(int y = 0; y < _gridArray.GetLength(1); y++)
             {
-                SetValue(x,y,0);
+                SetValue(x,y,"Empty");
             }
         }
+
+
     }
 
     private Vector3 GetWorldPosition(int x, int y)
@@ -40,29 +36,55 @@ public class GridManager
         return new Vector3(x+_offSetWidth,y+_offSetHeight) * _cellSize;
     }
     
-    public void SetValue(int x, int y, int value)
+    public void SetValue(int x, int y, string value)
     {
-        if(x >= 0 && y >= 0 && x < _width && y < _height && System.Enum.IsDefined(typeof(GridValues), value))
+        if(x >= 0 && y >= 0 && x < _width && y < _height)
         {
-            _gridArray[x,y] = (GridValues)value;
-            Debug.DrawLine(GetWorldPosition(x,y), GetWorldPosition(x, y+1), _colors[value], 100f);
-            Debug.DrawLine(GetWorldPosition(x,y), GetWorldPosition(x+1, y), _colors[value], 100f);
-            Debug.DrawLine(GetWorldPosition(x+1,y+1), GetWorldPosition(x, y+1), _colors[value], 100f);
-            Debug.DrawLine(GetWorldPosition(x+1,y+1), GetWorldPosition(x+1, y), _colors[value], 100f);
+            _gridArray[x,y] = value;
         }
+
+        Color color;
+        if(value == "Empty")
+        {
+            color = Color.white;
+        }
+        else if(value == "Snake")
+        {
+            color = Color.green;
+        }
+        else
+        {
+            color = Color.magenta;
+        }
+        Debug.DrawLine(GetWorldPosition(x,y), GetWorldPosition(x+1,y+1), color, 2f);
     }
 
-    private void GetXY(Vector3 worldPosition, out int x, out int y)
+    public void GetXY(Vector3 worldPosition, out int x, out int y)
     {
         x = Mathf.FloorToInt((worldPosition.x / _cellSize) - _offSetWidth);
         y = Mathf.FloorToInt((worldPosition.y / _cellSize) - _offSetHeight);
     }
 
-    public void SetValue(Vector3 worldPosition, int value)
+    public void SetValue(Vector3 worldPosition, string value)
     {
         int x,y;
         GetXY(worldPosition, out x, out y);
         SetValue(x, y, value);
+    }
+
+    public string GetValue(Vector3 worldPosition)
+    {
+        int x,y;
+        GetXY(worldPosition, out x, out y);
+        if(x >= 0 && y >= 0 && x < _width && y < _height)
+        {
+            return _gridArray[x,y];
+        }
+        else
+        {
+            return "Wall";
+        }
+        
     }
 
     

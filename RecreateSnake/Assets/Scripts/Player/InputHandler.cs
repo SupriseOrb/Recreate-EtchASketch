@@ -52,6 +52,8 @@ public class InputHandler : MonoBehaviour
         //_movementAction.started += OnMovement;
         _movementAction.performed += OnMovement;
         //_movementAction.canceled += OnMovement;
+
+        _movementAction.performed += OnGameStart;
     }
 
     //Unsubscribe from the various input action events when the input handler is disabled
@@ -76,7 +78,7 @@ public class InputHandler : MonoBehaviour
 
     private void OnMouseClick(InputAction.CallbackContext context)
     {
-        _playerManager.GameManager.SetValue(_mouseWorldPosition, (int)GridManager.GridValues.Snake);
+        _playerManager.GameManager.SetValue(_mouseWorldPosition, _playerManager.GameManager.GridValueSnake);
     }
 
     private void OnMovement(InputAction.CallbackContext context)
@@ -92,6 +94,13 @@ public class InputHandler : MonoBehaviour
             _playerManager.AddDirection(inputVector, true);
             _currentInputTime = 0f;
         }      
+    }
+
+    private void OnGameStart(InputAction.CallbackContext context)
+    {
+        Debug.Log("Start Game");
+        _playerManager.GameManager.GameStarted = true;
+        _movementAction.performed -= OnGameStart;
     }
 
     

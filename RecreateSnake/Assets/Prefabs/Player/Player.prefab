@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 2197176696220704933}
   - component: {fileID: 9082217532731492248}
   - component: {fileID: 4453445172800433615}
-  - component: {fileID: 4900839899325799899}
   m_Layer: 3
   m_Name: Functionality
   m_TagString: Untagged
@@ -137,9 +136,9 @@ MonoBehaviour:
   _cam: {fileID: 0}
   _gridMovement: {fileID: 4453445172800433615}
   _isMoving: 0
-  _currentDirection: {x: 0, y: 0}
-  _trailRenderer: {fileID: 0}
-  _length: 1
+  _currentDirection: {x: 0, y: 0, z: 0}
+  _trailRenderer: {fileID: 6267542784697845832}
+  _length: 4
   _baseTime: 0
 --- !u!114 &9082217532731492248
 MonoBehaviour:
@@ -174,22 +173,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerManager: {fileID: 2197176696220704933}
   _timeToMove: 0.2
---- !u!114 &4900839899325799899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2593695883676111938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86236bf77b1912542be3b15f28d2d74a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerManager: {fileID: 2197176696220704933}
-  _pickUpMask:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!1 &3388840996570287299
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,7 +279,7 @@ TrailRenderer:
   m_SortingLayerID: 1090911065
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Time: 0.75
+  m_Time: 0
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
