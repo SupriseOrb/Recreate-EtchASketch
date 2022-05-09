@@ -53,6 +53,7 @@ public class InputHandler : MonoBehaviour
         _movementAction.performed += OnMovement;
         //_movementAction.canceled += OnMovement;
 
+        //_movementAction.started += OnGameStart;
         _movementAction.performed += OnGameStart;
     }
 
@@ -83,7 +84,9 @@ public class InputHandler : MonoBehaviour
 
     private void OnMovement(InputAction.CallbackContext context)
     {
+        
         Vector3 inputVector = context.ReadValue<Vector2>();
+        
         if(_currentInputTime <= _maxTimeBetweenInputs && _currentInputTime >= _minTimeBetweenInputs)
         {
             _playerManager.AddDirection(inputVector);
@@ -98,8 +101,8 @@ public class InputHandler : MonoBehaviour
 
     private void OnGameStart(InputAction.CallbackContext context)
     {
-        Debug.Log("Start Game");
         _playerManager.GameManager.GameStarted = true;
+        //_movementAction.started -= OnGameStart;
         _movementAction.performed -= OnGameStart;
     }
 
