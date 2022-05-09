@@ -158,7 +158,7 @@ MonoBehaviour:
   _mouseClickActionString: MouseLeftClick
   _playerMovementActionString: Movement
   _maxTimeBetweenInputs: 0.3
-  _minTimeBetweenInputs: 0.1
+  _minTimeBetweenInputs: 0
 --- !u!114 &4453445172800433615
 MonoBehaviour:
   m_ObjectHideFlags: 0
