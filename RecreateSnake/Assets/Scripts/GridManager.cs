@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class GridManager
 {
-    [SerializeField] [Range(5,18)] private int _width;
-    [SerializeField] [Range(5,10)] private int _height;
-    [SerializeField] private float _cellSize;
-    [SerializeField] private string[,] _gridArray;
-    [SerializeField] private float _offSetWidth;
-    [SerializeField] private float _offSetHeight;
+    public int TileCount { get { return _width * _height;}}
+    private int _width;
+    private int _height;
+    private float _cellSize;
+    private string[,] _gridArray;
+    private float _offSetWidth;
+    private float _offSetHeight;
     public GridManager(int width, int height, float cellSize)
     {
         _width = width;
@@ -29,6 +30,45 @@ public class GridManager
         }
 
 
+    }
+
+    private bool IsTileEmpty(int x, int y)
+    {
+        if(x >= 0 && y >= 0 && x < _width && y < _height)
+        {
+            return _gridArray[x,y] == "Empty";
+        }
+        else
+        {
+            return false;
+        }     
+    }
+
+    //Returns an empty position
+    //If there's no empty position return a Vector3 of max values
+    public Vector3 GetRandomEmptyPosition()
+    {
+        List<Vector3> emptyCoords = new List<Vector3>();
+        for(int x = 0; x < _gridArray.GetLength(0); x++)
+        {
+            for(int y = 0; y < _gridArray.GetLength(1); y++)
+            {
+                if(IsTileEmpty(x,y))
+                {
+                    emptyCoords.Add(GetWorldPosition(x,y));
+                }
+            }
+        }
+
+        if(emptyCoords.Count == 0)
+        {
+            Debug.Log("No Empty Tiles");
+            return new Vector3(int.MaxValue, int.MaxValue, int.MaxValue);
+        }
+        else
+        {
+            return emptyCoords[Random.Range(0, emptyCoords.Count)];
+        }
     }
 
     private Vector3 GetWorldPosition(int x, int y)
@@ -71,6 +111,7 @@ public class GridManager
         GetXY(worldPosition, out x, out y);
         SetValue(x, y, value);
     }
+    
 
     public string GetValue(Vector3 worldPosition)
     {

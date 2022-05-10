@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     [Header("Outside Prefab")]
     [SerializeField] private PlayerManager _playerManager;
+    [SerializeField] private TextMeshProUGUI _scoreText;
+    [SerializeField] private SpriteRenderer _pickupSpriteRenderer;
 
     [Header("Grid Data")]
     [SerializeField] [Range(5,18)] private int _width = 18;
@@ -15,12 +17,12 @@ public class GameManager : MonoBehaviour
     private GridManager _gameState;
 
     [Header("UI")]
-    [SerializeField] private TextMeshProUGUI _scoreText;
     [SerializeField] private int score = 0;
 
     #region Grid Values
     [Header("Grid Values")]
     [SerializeField] private List<PickupData> _pickupValues;
+    private PickupData _currentPickup;
     private Dictionary<string, PickupData> _pickupDict;
     public string GridValueSnake{ get{return "Snake";}}
     private string GridValueWall{ get{return "Wall";}}
@@ -45,8 +47,50 @@ public class GameManager : MonoBehaviour
         UpdateScore(0);
         _gameState = new GridManager(_width,_height,_cellSize);
         UpdateGameStartState();
+        UpdateCurrentPickup();
+        SpawnPickup();
     }
 
+    
+    private void UpdateCurrentPickup(PickupData pickupData = null)
+    {
+        if(pickupData == null)
+        {
+            int randomIndex = Random.Range(0, _pickupValues.Count);
+            _currentPickup = _pickupValues[randomIndex];
+        }
+        else
+        {
+            _currentPickup = pickupData;
+        }
+    }
+
+    //"Spawns" a pickup in a random position
+    private void SpawnPickup()
+    {
+        //Call function that calculates the position of the new pickup
+        Vector3 position = _gameState.GetRandomEmptyPosition();
+        SpawnPickup(position);
+    }
+
+    //"Spawns" a pickup in a certain position
+    //Method: changes the pickup prefab sprite renderer's position and sprite based on our current pickup data
+    private void SpawnPickup(Vector3 position)
+    {
+        //"Spawns" pickup in world space
+        _pickupSpriteRenderer.transform.position = position + new Vector3(0.5f,0.5f,0);
+        if(_currentPickup == null)
+        {
+            _currentPickup = _pickupValues[0];
+        }
+
+        _pickupSpriteRenderer.sprite = _currentPickup.Sprite;
+
+        //"Spawn" pickup in game state
+        SetValue(position, _currentPickup.name);
+    }
+
+    
     private void UpdateGameStartState()
     {
         Vector3 playerPosition = _playerManager.transform.position;
@@ -76,6 +120,7 @@ public class GameManager : MonoBehaviour
             //TODO: Check if lose or win
             //Win: length = grid count
             //Else lose
+            //Called GameOver regardless
             return;
         }
         else if(_pickupDict.ContainsKey(value))
@@ -84,9 +129,14 @@ public class GameManager : MonoBehaviour
             _playerManager.IncreaseLength();
             UpdateScore(points);
             _gameState.SetValue(position, GridValueSnake);
-            /*TODO
-            Spawn new pickup
-            */
+            if(_playerManager.SnakeLength != _gameState.TileCount)
+            {
+                SpawnPickup();
+            }
+            else
+            {
+                GameOver(win:true);
+            }
         }
         else
         {
@@ -94,6 +144,17 @@ public class GameManager : MonoBehaviour
             _snakeBlobPositions.Enqueue(position);
             Vector3 removeSnakePosition = _snakeBlobPositions.Dequeue();
             _gameState.SetValue(removeSnakePosition, GridValueEmpty);
+        }
+    }
+    private void GameOver(bool win)
+    {
+        if(win)
+        {
+            Debug.Log("You win!");
+        }
+        else
+        {
+            Debug.Log("You lose :(");
         }
     }
 
@@ -105,10 +166,5 @@ public class GameManager : MonoBehaviour
             _scoreText.text = "Score: " + score.ToString();
         }
         
-    }
-
-    public Vector3 NextAvailablePosition(Vector3 lastPosition, Vector3 secondToLastPosition)
-    {
-        return new Vector3();
     }
 }
