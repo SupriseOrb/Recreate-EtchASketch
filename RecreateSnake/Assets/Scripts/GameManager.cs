@@ -114,17 +114,21 @@ public class GameManager : MonoBehaviour
     {
         string value = _gameState.GetValue(position);
         if ((value == GridValueSnake && position != _snakeBlobPositions.Peek()) || value == GridValueWall)
-        {
-            Debug.Log("Game Over: " + value);
-            Time.timeScale = 0f;
-            //TODO: Check if lose or win
-            //Win: length = grid count
-            //Else lose
-            //Called GameOver regardless
+        {           
+            if(_playerManager.SnakeLength == _gameState.TileCount)
+            {
+                GameOver(win:true);
+            }
+            else
+            {
+                GameOver(win:false);
+            }
             return;
         }
         else if(_pickupDict.ContainsKey(value))
         {
+            //TODO: Grid set values are not being set up correctly when picking up something
+            //Either set values are being called wrongly, or the functionality of set value is bad
             int points = _pickupDict[value].Points;
             _playerManager.IncreaseLength();
             UpdateScore(points);
@@ -148,6 +152,7 @@ public class GameManager : MonoBehaviour
     }
     private void GameOver(bool win)
     {
+        Time.timeScale = 0f;
         if(win)
         {
             Debug.Log("You win!");
