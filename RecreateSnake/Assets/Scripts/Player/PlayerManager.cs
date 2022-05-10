@@ -25,7 +25,6 @@ public class PlayerManager : MonoBehaviour
     [Tooltip("Includes snake head")][SerializeField] private int _length = 2;
     public int SnakeLength {get{return _length;}}
     [SerializeField] private float _baseTime = 0f;
-    private float _timePerBlob;
     
     private void Start()
     {
@@ -33,9 +32,11 @@ public class PlayerManager : MonoBehaviour
     }
     private void Setup()
     {
-        _timePerBlob = _gridMovement.TimeToMove;
+        float _timePerBlob = _gridMovement.TimeToMove;
         _trailRenderer.time = _baseTime + ((_length-1)*_timePerBlob);      
     }
+
+    //Note this function won't hold up if I want to increase the snake's speed as the game goes on
     public void IncreaseLength()
     {
         _length++;
