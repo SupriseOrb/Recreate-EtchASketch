@@ -127,20 +127,12 @@ public class GameManager : MonoBehaviour
         }
         else if(_pickupDict.ContainsKey(value))
         {
-            //TODO: Grid set values are not being set up correctly when picking up something
-            //Either set values are being called wrongly, or the functionality of set value is bad
             int points = _pickupDict[value].Points;
             _playerManager.IncreaseLength();
             UpdateScore(points);
             _gameState.SetValue(position, GridValueSnake);
-            if(_playerManager.SnakeLength != _gameState.TileCount)
-            {
-                SpawnPickup();
-            }
-            else
-            {
-                GameOver(win:true);
-            }
+            _snakeBlobPositions.Enqueue(position);
+            SpawnPickup();
         }
         else
         {
